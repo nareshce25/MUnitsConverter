@@ -15,23 +15,6 @@ Measurement Units Converter is a RESTful API built with .NET 8 and ASP.NET Core 
 - **Swagger/OpenAPI**: Interactive API documentation and testing interface
 - **Dependency Injection**: Loosely coupled, testable architecture
 
-## 🏗 Architecture Diagram
-
-```mermaid
-flowchart TD
-    A[Client Request] --> B[ConversionController]
-    B -->|API Call| C[IConversionService]
-    C --> D[ConversionService]
-
-    D -->|Length & Weight| E[Conversion Factors Dictionary]
-    D -->|Temperature| F[Temperature Conversion Logic]
-
-    E --> G[ConversionResponse]
-    F --> G[ConversionResponse]
-
-    G --> H[Return JSON Response]
-
-
 ## Getting Started
 
 ### Prerequisites
@@ -46,26 +29,6 @@ flowchart TD
 3. Build the solution:
 4. Run the application:
 
-### API Endpoints
-- `POST /api/convert/length`: Convert between meters and feet
-- `POST /api/convert/temperature`: Convert between Celsius and Fahrenheit
-- `POST /api/convert/weight`: Convert between kilograms and pounds
-### Example Request
-```json
-{
-  "value": 100,
-  "fromUnit": "meters",
-  "toUnit": "feet"
-}
-```
-### Example Response
-```json
-{
-  "convertedValue": 328.084,
-  "fromUnit": "meters",
-  "toUnit": "feet"
-}
-```
 ## Rate Limiting
 
 The API implements rate limiting with the following default policy:
@@ -103,4 +66,5 @@ This project is open source and available under the MIT License.
 ## Contact
 
 For more information, visit the [GitHub repository](https://github.com/nareshce25/MeasurementUnitsConverter).
+
    
