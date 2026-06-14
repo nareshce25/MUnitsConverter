@@ -1,0 +1,6 @@
+@MUnitsConverter_HostAddress = http://localhost:5122
+
+GET {{MUnitsConverter_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
