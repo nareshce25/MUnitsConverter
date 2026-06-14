@@ -1,3 +1,4 @@
+using MUnitsConverter.Middleware;
 using MUnitsConverter.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,8 +11,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IConversionService, ConversionService>();
+builder.Services.AddScoped<ILengthConversionService, LengthConversionService>();
+builder.Services.AddScoped<ITemperatureConversionService, TemperatureConversionService>();
+builder.Services.AddScoped<IWeightConversionService, WeightConversionService>();
+
 
 var app = builder.Build();
+app.UseExceptionHandling();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
