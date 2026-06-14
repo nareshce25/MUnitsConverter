@@ -6,6 +6,24 @@ A comprehensive .NET 8 ASP.NET Core Web API for converting between different mea
 
 Measurement Units Converter is a RESTful API built with .NET 8 and ASP.NET Core that provides conversion services between commonly used measurement units. The solution follows clean architecture principles with service interfaces, implementations, and controllers for maintainable and scalable code.
 
+## Architecture Diagram
+```mermaid
+flowchart TD
+    A[Client Request] --> B[ConversionController]
+    B -->|POST /api/conversion/convert| C[IConversionService]
+    C --> D[ConversionService]
+
+    D --> E[Length Conversion Logic]
+    D --> F[Weight Conversion Logic]
+    D --> G[Temperature Conversion Logic]
+
+    E --> H[ConversionResponse]
+    F --> H[ConversionResponse]
+    G --> H[ConversionResponse]
+
+    H --> I[Return JSON Response]
+```
+
 ## Features
 
 - **Length Conversion**: Convert between meters and feet
