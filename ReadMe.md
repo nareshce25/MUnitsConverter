@@ -1,10 +1,27 @@
 ﻿# Measurement Units Converter
 
-A comprehensive .NET 8 ASP.NET Core Web API for converting between different measurement units including length, temperature, and weight.
+A comprehensive .NET 8 ASP.NET Core Web API for converting between different measurement units, including length, temperature, and weight.
 
 ## Overview
 
 Measurement Units Converter is a RESTful API built with .NET 8 and ASP.NET Core that provides conversion services between commonly used measurement units. The solution follows clean architecture principles with service interfaces, implementations, and controllers for maintainable and scalable code.
+
+## Architecture Diagram
+```mermaid
+flowchart TD
+    A[Client Request] --> B[ConversionController]
+    B -->|POST /api/conversion/convert| C[IConversionService]
+
+    C --> E[Length Conversion Service]
+    C --> F[Weight Conversion Service]
+    C --> G[Temperature Conversion Service]
+
+    E --> H[ConversionResponse]
+    F --> H[ConversionResponse]
+    G --> H[ConversionResponse]
+
+    H --> I[Return JSON Response]
+```
 
 ## Features
 
@@ -29,6 +46,122 @@ Measurement Units Converter is a RESTful API built with .NET 8 and ASP.NET Core 
 3. Build the solution:
 4. Run the application:
 
+
+## API Endpoints
+
+All endpoints are prefixed with `/api/conversion`
+
+### Convert Unit
+
+**Endpoint**: `POST /api/conversion/convert`
+
+**Description**: Converts a value from one unit to another based on the specified category.
+
+**Request Body**:
+```bash
+{
+    "value": 10,
+    "fromUnit": "meter",
+    "toUnit": "foot",
+    "category": "length"
+}
+```
+
+**Response** (Status 200):
+```bash
+{
+    "convertedValue": 32.8084,
+    "message": "10 meter = 32.8084 foot"
+}
+```
+
+**Error Response** (Status 400):
+```bash
+{
+    "error": "Invalid request."
+}
+```
+
+
+### Supported Conversions
+
+#### Length Conversion
+- **Category**: `length`
+- **Supported Units**: `meter`, `foot`
+- **Conversion**: 1 meter = 3.28084 feet
+
+**Example Request**:
+```bash
+POST
+"https://localhost:7000/api/conversion/convert" 
+"Content-Type: application/json" 
+'{
+        "value": 5,
+        "fromUnit": "meter",
+        "toUnit": "foot",
+        "category": "length"
+    }'
+```
+
+
+**Example Response**:
+```bash
+{
+    "convertedValue": 16.4042,
+    "message": "5 meter = 16.4042 foot"
+}
+```
+#### Temperature Conversion
+- **Category**: `temperature`
+- **Supported Units**: `celsius`, `fahrenheit`
+- **Conversion**: °F = (°C × 9/5) + 32
+
+**Example Request**:
+```bash
+POST
+"https://localhost:7000/api/conversion/convert" 
+"Content-Type: application/json" 
+'{
+    "value": 25,
+    "fromUnit": "celsius",
+    "toUnit": "fahrenheit",
+    "category": "temperature"
+}'
+```
+
+**Example Response**:
+{ 
+    "convertedValue": 77, 
+    "message": "25 celsius = 77 fahrenheit" 
+}
+
+#### Weight Conversion
+- **Category**: `weight`
+- **Supported Units**: `kilogram`, `pound`
+- **Conversion**: 1 kilogram = 2.20462 pounds
+
+**Example Request**:
+```bash
+POST
+"https://localhost:7000/api/conversion/convert" 
+"Content-Type: application/json" 
+'{
+    "value": 75,
+    "fromUnit": "kilogram",
+    "toUnit": "pound",
+    "category": "weight"
+}'
+```
+
+**Example Response**:
+```bash
+{
+    "convertedValue": 165.3465,
+    "message": "75 kilogram = 165.3465 pound"
+}
+```
+
+
 ## Rate Limiting
 
 The API implements rate limiting with the following default policy:
@@ -39,14 +172,10 @@ The API implements rate limiting with the following default policy:
 ## API Documentation
 
 Interactive Swagger/OpenAPI documentation is available at:
+- **Development**: `https://localhost:7000/swagger/index.html`
+- **Production**: `https://yourdomain.com/swagger/index.html`
 
-Use the Swagger UI to explore and test all available endpoints.
-
-## Conversion Factors
-
-- **Length**: 1 meter = 3.28084 feet
-- **Temperature**: °F = (°C × 9/5) + 32
-- **Weight**: 1 kilogram = 2.20462 pounds
+Use the Swagger UI to explore and test all available endpoints interactively.
 
 ## Technologies
 
@@ -65,6 +194,6 @@ This project is open source and available under the MIT License.
 
 ## Contact
 
-For more information, visit the [GitHub repository](https://github.com/nareshce25/MeasurementUnitsConverter).
+For more information, visit the [GitHub repository](https://github.com/nareshce25/MUnitsConverter).
 
    
