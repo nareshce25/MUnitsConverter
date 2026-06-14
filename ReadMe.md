@@ -13,9 +13,9 @@ flowchart TD
     B -->|POST /api/conversion/convert| C[IConversionService]
     C --> D[ConversionService]
 
-    D --> E[Length Conversion Logic]
-    D --> F[Weight Conversion Logic]
-    D --> G[Temperature Conversion Logic]
+    D --> E[Length Conversion Service]
+    D --> F[Weight Conversion Service]
+    D --> G[Temperature Conversion Service]
 
     E --> H[ConversionResponse]
     F --> H[ConversionResponse]
@@ -47,6 +47,73 @@ flowchart TD
 3. Build the solution:
 4. Run the application:
 
+
+## API Endpoints
+
+All endpoints are prefixed with `/api/conversion`
+
+### Convert Unit
+
+**Endpoint**: `POST /api/conversion/convert`
+
+**Description**: Converts a value from one unit to another based on the specified category.
+
+**Request Body**:
+{ "value": 10, "fromUnit": "meter", "toUnit": "foot", "category": "length" }
+
+**Response** (Status 200):
+{ "convertedValue": 32.8084, "message": "10 meter = 32.8084 foot" }
+
+**Error Response** (Status 400):
+{ "error": "Invalid request." }
+
+
+### Supported Conversions
+
+#### Length Conversion
+- **Category**: `length`
+- **Supported Units**: `meter`, `foot`
+- **Conversion**: 1 meter = 3.28084 feet
+
+**Example Request**:
+curl -X POST "https://localhost:7000/api/conversion/convert" 
+-H "Content-Type: application/json" 
+-d '{"value": 5, "fromUnit": "meter", "toUnit": "foot", "category": "length"}'
+
+
+**Example Response**:
+{ "convertedValue": 16.4042, "message": "5 meter = 16.4042 foot" }
+
+
+
+#### Temperature Conversion
+- **Category**: `temperature`
+- **Supported Units**: `celsius`, `fahrenheit`
+- **Conversion**: °F = (°C × 9/5) + 32
+
+**Example Request**:
+curl -X POST "https://localhost:7000/api/conversion/convert" 
+-H "Content-Type: application/json" 
+-d '{"value": 25, "fromUnit": "celsius", "toUnit": "fahrenheit", "category": "temperature"}'
+
+**Example Response**:
+{ "convertedValue": 77, "message": "25 celsius = 77 fahrenheit" }
+
+
+#### Weight Conversion
+- **Category**: `weight`
+- **Supported Units**: `kilogram`, `pound`
+- **Conversion**: 1 kilogram = 2.20462 pounds
+
+**Example Request**:
+curl -X POST "https://localhost:7000/api/conversion/convert" 
+-H "Content-Type: application/json" 
+-d '{"value": 75, "fromUnit": "kilogram", "toUnit": "pound", "category": "weight"}'
+
+**Example Response**:
+{ "convertedValue": 165.3465, "message": "75 kilogram = 165.3465 pound" }
+
+
 ## Rate Limiting
 
 The API implements rate limiting with the following default policy:
@@ -57,14 +124,10 @@ The API implements rate limiting with the following default policy:
 ## API Documentation
 
 Interactive Swagger/OpenAPI documentation is available at:
+- **Development**: `https://localhost:7000/swagger/index.html`
+- **Production**: `https://yourdomain.com/swagger/index.html`
 
-Use the Swagger UI to explore and test all available endpoints.
-
-## Conversion Factors
-
-- **Length**: 1 meter = 3.28084 feet
-- **Temperature**: °F = (°C × 9/5) + 32
-- **Weight**: 1 kilogram = 2.20462 pounds
+Use the Swagger UI to explore and test all available endpoints interactively.
 
 ## Technologies
 
@@ -83,6 +146,6 @@ This project is open source and available under the MIT License.
 
 ## Contact
 
-For more information, visit the [GitHub repository](https://github.com/nareshce25/MeasurementUnitsConverter).
+For more information, visit the [GitHub repository](https://github.com/nareshce25/MUnitsConverter).
 
    
