@@ -1,6 +1,6 @@
 ﻿# Measurement Units Converter
 
-A comprehensive .NET 8 ASP.NET Core Web API for converting between different measurement units including length, temperature, and weight.
+A comprehensive .NET 8 ASP.NET Core Web API for converting between different measurement units, including length, temperature, and weight.
 
 ## Overview
 
@@ -11,11 +11,10 @@ Measurement Units Converter is a RESTful API built with .NET 8 and ASP.NET Core 
 flowchart TD
     A[Client Request] --> B[ConversionController]
     B -->|POST /api/conversion/convert| C[IConversionService]
-    C --> D[ConversionService]
 
-    D --> E[Length Conversion Service]
-    D --> F[Weight Conversion Service]
-    D --> G[Temperature Conversion Service]
+    C --> E[Length Conversion Service]
+    C --> F[Weight Conversion Service]
+    C --> G[Temperature Conversion Service]
 
     E --> H[ConversionResponse]
     F --> H[ConversionResponse]
@@ -59,13 +58,29 @@ All endpoints are prefixed with `/api/conversion`
 **Description**: Converts a value from one unit to another based on the specified category.
 
 **Request Body**:
-{ "value": 10, "fromUnit": "meter", "toUnit": "foot", "category": "length" }
+```bash
+{
+    "value": 10,
+    "fromUnit": "meter",
+    "toUnit": "foot",
+    "category": "length"
+}
+```
 
 **Response** (Status 200):
-{ "convertedValue": 32.8084, "message": "10 meter = 32.8084 foot" }
+```bash
+{
+    "convertedValue": 32.8084,
+    "message": "10 meter = 32.8084 foot"
+}
+```
 
 **Error Response** (Status 400):
-{ "error": "Invalid request." }
+```bash
+{
+    "error": "Invalid request."
+}
+```
 
 
 ### Supported Conversions
@@ -76,29 +91,49 @@ All endpoints are prefixed with `/api/conversion`
 - **Conversion**: 1 meter = 3.28084 feet
 
 **Example Request**:
-curl -X POST "https://localhost:7000/api/conversion/convert" 
--H "Content-Type: application/json" 
--d '{"value": 5, "fromUnit": "meter", "toUnit": "foot", "category": "length"}'
+```bash
+POST
+"https://localhost:7000/api/conversion/convert" 
+"Content-Type: application/json" 
+'{
+        "value": 5,
+        "fromUnit": "meter",
+        "toUnit": "foot",
+        "category": "length"
+    }'
+```
 
 
 **Example Response**:
-{ "convertedValue": 16.4042, "message": "5 meter = 16.4042 foot" }
-
-
-
+```bash
+{
+    "convertedValue": 16.4042,
+    "message": "5 meter = 16.4042 foot"
+}
+```
 #### Temperature Conversion
 - **Category**: `temperature`
 - **Supported Units**: `celsius`, `fahrenheit`
 - **Conversion**: °F = (°C × 9/5) + 32
 
 **Example Request**:
-curl -X POST "https://localhost:7000/api/conversion/convert" 
--H "Content-Type: application/json" 
--d '{"value": 25, "fromUnit": "celsius", "toUnit": "fahrenheit", "category": "temperature"}'
+```bash
+POST
+"https://localhost:7000/api/conversion/convert" 
+"Content-Type: application/json" 
+'{
+    "value": 25,
+    "fromUnit": "celsius",
+    "toUnit": "fahrenheit",
+    "category": "temperature"
+}'
+```
 
 **Example Response**:
-{ "convertedValue": 77, "message": "25 celsius = 77 fahrenheit" }
-
+{ 
+    "convertedValue": 77, 
+    "message": "25 celsius = 77 fahrenheit" 
+}
 
 #### Weight Conversion
 - **Category**: `weight`
@@ -106,12 +141,25 @@ curl -X POST "https://localhost:7000/api/conversion/convert"
 - **Conversion**: 1 kilogram = 2.20462 pounds
 
 **Example Request**:
-curl -X POST "https://localhost:7000/api/conversion/convert" 
--H "Content-Type: application/json" 
--d '{"value": 75, "fromUnit": "kilogram", "toUnit": "pound", "category": "weight"}'
+```bash
+POST
+"https://localhost:7000/api/conversion/convert" 
+"Content-Type: application/json" 
+'{
+    "value": 75,
+    "fromUnit": "kilogram",
+    "toUnit": "pound",
+    "category": "weight"
+}'
+```
 
 **Example Response**:
-{ "convertedValue": 165.3465, "message": "75 kilogram = 165.3465 pound" }
+```bash
+{
+    "convertedValue": 165.3465,
+    "message": "75 kilogram = 165.3465 pound"
+}
+```
 
 
 ## Rate Limiting
